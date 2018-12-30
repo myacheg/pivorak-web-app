@@ -1,4 +1,4 @@
-RSpec.describe 'Visit Requests APPROVE' do
+RSpec.describe 'Visit Requests IMPORT' do
   let(:not_passed_event) { create(:event) }
   let(:passed_event)     { create(:event, status: :passed) }
   let(:user_a)           { create(:user, first_name: 'A', last_name: 'User') }

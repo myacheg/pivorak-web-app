@@ -1,17 +1,44 @@
 module Admin
   class VisitRequestsController < ::Admin::BaseController
-    helper_method :visit_requests, :event, :visitors_ids, :confirmed_ids, :applied_ids,
+    helper_method :form, :visit_requests, :event, :visitors_ids, :confirmed_ids, :applied_ids,
                   :pending_ids, :approved_ids
 
-    before_action :only_supervisor!
+    before_action :only_supervisor!, :set_breadcrumbs
+
+    def new
+      @form = InviteByEmailForm.new
+    end
+
+    def create
+      @form = InviteByEmailForm.new(visit_request_params)
+
+      if @form.valid?
+        ::VisitRequest::Invite.call(emails: @form.email, event: event)
+        redirect_to admin_event_visit_requests_path(event)
+      else
+        render :new
+      end
+    end
 
     def index
+
+    end
+
+    private
+
+    def form
+      @form
+    end
+
+    def visit_request_params
+      params.require(:invite_by_email_form).permit(:email)
+    end
+
+    def set_breadcrumbs
       add_breadcrumb 'events.plural', path: :admin_events_path
       add_breadcrumb event, path: edit_admin_event_path(event)
       add_breadcrumb 'visit_requests.plural'
     end
-
-    private
 
     def event
       @event ||= Event.friendly.find(params[:event_id])

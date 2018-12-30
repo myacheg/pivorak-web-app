@@ -1,4 +1,5 @@
 .twelve.wide.column
+  = link_to 'Invite user', new_admin_event_visit_request_path, class: 'ui button blue'
   = send_email_to_recipient_ids_link(visitors_ids)
   = send_email_to_attendees_link(confirmed_ids)
   = send_email_to_applied_users_link(applied_ids)

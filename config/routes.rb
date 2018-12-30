@@ -41,7 +41,7 @@ Rails.application.routes.draw do
     get  'visit_request/:token/check_in/', to: 'visit_request/check_in#show', as: :visit_request_check_in
 
     resources :events,  except: %i[show destroy] do
-      resources :visit_requests, only: %i[index] do
+      resources :visit_requests, only: %i[index create new] do
         collection do
           post :send_confirmations, to: 'visit_request/send_confirmations#create'
           post :send_confirmation_reminders, to: 'visit_request/send_confirmation_reminders#create'

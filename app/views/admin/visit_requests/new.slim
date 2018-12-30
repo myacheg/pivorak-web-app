@@ -1,0 +1,5 @@
+= simple_form_for form, url: admin_event_visit_requests_path do |f|
+  .one.field
+    = f.input :email, as: :text, placeholder: 'Email or emails separated by comma', label: 'Email or emails. Example: john@m.com OR john@m.com, peter@m.com'
+  .one.field
+    = f.button :submit, value: 'Invite'
