@@ -5,10 +5,6 @@ module Admin
 
     before_action :only_supervisor!, :set_breadcrumbs
 
-    def new
-      @form = InviteByEmailForm.new
-    end
-
     def create
       @form = InviteByEmailForm.new(visit_request_params)
 
@@ -20,14 +16,10 @@ module Admin
       end
     end
 
-    def index
-
-    end
-
     private
 
     def form
-      @form
+      @form ||= InviteByEmailForm.new
     end
 
     def visit_request_params

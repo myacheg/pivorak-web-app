@@ -2,6 +2,8 @@ class InviteByEmailForm
   include ActiveModel::Model
   attr_accessor :email
 
+  DELIMITER = ','
+
   validates :email,
             presence: true,
             format: {with: Devise.email_regexp, message: 'example:  john@gmail.com'}, unless: :email_is_list?
@@ -16,16 +18,16 @@ class InviteByEmailForm
 
     return if invalid_emails.empty?
 
-    errors.add(:email, "Following emails are invalid: #{invalid_emails.join(',')}")
+    errors.add(:email, "Following emails are invalid: #{invalid_emails.join(DELIMITER)}")
   end
 
   def emails
-    email.split(',').reject(&:blank?)
+    email.split(DELIMITER).reject(&:blank?)
   end
 
   def email_is_list?
     return false if email.blank?
 
-    email.include?(',')
+    email.include?(DELIMITER)
   end
 end
